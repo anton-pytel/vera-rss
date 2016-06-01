@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<implementation>
+  <functions>
+    package.loaded.L_RssRead = nil
+    rss_reader = require ("L_RssRead")    
+	RSSREAD_SERVICE = rss_reader.RSSREAD_SERVICE
+    function refreshVariables()
+	  rss_reader.refreshCache()
+	end
+    function startup(lul_device)
+	  rss_reader.initialize(lul_device)
+    end
+  </functions>
+  <incoming>
+      luup.log("when does this happen")
+  </incoming>
+  <startup>startup</startup>
+  <actionList>
+	<action>
+	 <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+	 <name>GetFeed</name>
+	   <run>
+		 yTitle, yDescr, yContent, yLink = rss_reader.sendRequest(lul_settings.xRssUrl, lul_settings.xUserName, lul_settings.xPassword)
+		 if yTitle then
+			 luup.variable_set(RSSREAD_SERVICE, "rssTitle", yTitle, lul_device)
+			 luup.variable_set(RSSREAD_SERVICE, "rssDescription", yDescr, lul_device)
+			 luup.variable_set(RSSREAD_SERVICE, "rssContent", yContent, lul_device)
+			 luup.variable_set(RSSREAD_SERVICE, "rssLink", yLink, lul_device)
+		 end
+	   </run>
+	</action>  
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetURL</name>
+      <run>
+        luup.variable_set(RSSREAD_SERVICE, "rssURL", lul_settings.xRssUrl or "", lul_device)
+		luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetUser</name>
+      <run>
+	    --luup.log("service" .. RSSREAD_SERVICE)
+        luup.variable_set(RSSREAD_SERVICE, "userName", lul_settings.xUserName or "", lul_device)
+		luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>	
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetPass</name>
+      <run>
+        luup.variable_set(RSSREAD_SERVICE, "Password", lul_settings.xPassword or "", lul_device)
+        luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>	
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetRefPeriod</name>
+      <run>
+	    --luup.log("service" .. RSSREAD_SERVICE)
+	    --luup.log("lul_settings.xRefPeriod" .. lul_settings.xRefPeriod)
+        luup.variable_set(RSSREAD_SERVICE, "refreshperiod", lul_settings.xRefPeriod or "", lul_device)
+        luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetWeather</name>
+      <run>
+        luup.variable_set(RSSREAD_SERVICE, "weatherItem", lul_settings.xSet or "", lul_device)
+        luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>	
+    <action>
+      <serviceId>urn:demo-micasaverde-com:serviceId:RssRead1</serviceId>
+      <name>SetSelected</name>
+      <run>
+        luup.variable_set(RSSREAD_SERVICE, "selectedItem", lul_settings.xItemId or "", lul_device)
+        luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>		
+    <action>
+      <serviceId>urn:micasaverde-com:serviceId:HaDevice1</serviceId>
+      <name>Poll</name>
+      <run>
+        -- Force refreshCache to get called in a Timer
+        luup.call_timer("refreshVariables", 1, "1", "")
+      </run>
+    </action>
+  </actionList>
+</implementation>

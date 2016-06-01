@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<scpd xmlns="urn:schemas-upnp-org:service-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <serviceStateTable>  
+	<stateVariable sendEvents="no">
+       <name>rssURL</name>
+       <dataType>string</dataType>
+       <defaultValue>url of RSS feed</defaultValue>
+	   <shortCode>rssurl</shortCode>
+    </stateVariable>    
+	<stateVariable sendEvents="no">
+       <name>userName</name>
+       <dataType>string</dataType>
+       <defaultValue>username of RSS feed</defaultValue>
+	   <shortCode>username</shortCode>
+    </stateVariable>	
+	<stateVariable sendEvents="no">
+       <name>Password</name>
+       <dataType>string</dataType>
+       <defaultValue>password of RSS feed</defaultValue>
+	   <shortCode>password</shortCode>
+    </stateVariable>	
+	<stateVariable sendEvents="no">
+       <name>rssTitle</name>
+       <dataType>string</dataType>
+       <defaultValue>Name of RSS feed</defaultValue>
+	   <shortCode>rsstitle</shortCode>
+    </stateVariable>  
+	<stateVariable sendEvents="no">
+       <name>rssDescription</name>
+       <dataType>string</dataType>
+       <defaultValue>Description of RSS feed</defaultValue>
+	   <shortCode>rssdescr</shortCode>
+    </stateVariable>  		
+	<stateVariable sendEvents="no">
+       <name>rssContent</name>
+       <dataType>string</dataType>
+       <defaultValue>Content of RSS feed</defaultValue>
+	   <shortCode>rsscontent</shortCode>
+    </stateVariable> 
+	<stateVariable sendEvents="no">
+       <name>rssLink</name>
+       <dataType>string</dataType>
+       <defaultValue>Link to article</defaultValue>
+	   <shortCode>rsslink</shortCode>
+    </stateVariable> 	
+	<stateVariable sendEvents="no">
+	   <name>refreshperiod</name>          
+	   <dataType>ui4</dataType> 
+	   <defaultValue>1800</defaultValue> 
+	   <shortCode>refperiod</shortCode>
+	</stateVariable>
+	<stateVariable sendEvents="no">
+	   <name>itemsCount</name>          
+	   <dataType>ui4</dataType> 
+	   <defaultValue>1</defaultValue> 
+	   <shortCode>itemcount</shortCode>
+	</stateVariable>	
+	<stateVariable sendEvents="no">
+	   <name>selectedItem</name>          
+	   <dataType>ui4</dataType> 
+	   <defaultValue>1</defaultValue> 
+	   <shortCode>selecteditem</shortCode>
+	</stateVariable>	
+	<stateVariable sendEvents="no">
+	   <name>weatherItem</name>          
+	   <dataType>boolean</dataType> 
+	   <defaultValue>0</defaultValue> 
+	   <shortCode>weatheritem</shortCode>
+	</stateVariable>	
+	
+	<stateVariable sendEvents="yes"><name>temperature.sensor.0</name>  <dataType>i4</dataType> <shortCode>temp.sens.0</shortCode> </stateVariable>
+	<stateVariable sendEvents="yes"><name>temperature.sensor.1</name>  <dataType>i4</dataType> <shortCode>temp.sens.1</shortCode> </stateVariable>
+	<stateVariable sendEvents="yes"><name>humidity.sensor.0</name>     <dataType>i4</dataType> <shortCode>hum.sens.0</shortCode> </stateVariable>
+	<stateVariable sendEvents="yes"><name>humidity.sensor.1</name>     <dataType>i4</dataType> <shortCode>hum.sens.1</shortCode> </stateVariable>
+	
+  </serviceStateTable>
+  <actionList>
+    <action>
+      <name>SetURL</name>
+	  <argumentList>
+		<argument>
+          <name>xRssUrl</name>
+          <direction>in</direction>
+          <relatedStateVariable>rssURL</relatedStateVariable>
+        </argument>
+      </argumentList>
+	</action>
+    <action>	
+      <name>SetUser</name>
+	  <argumentList>
+		<argument>
+          <name>xUserName</name>
+          <direction>in</direction>
+          <relatedStateVariable>userName</relatedStateVariable>
+        </argument>
+      </argumentList>
+    </action>	  
+    <action>
+      <name>SetPass</name>
+	  <argumentList>
+		<argument>
+          <name>xPassword</name>
+          <direction>in</direction>
+          <relatedStateVariable>Password</relatedStateVariable>
+        </argument>
+      </argumentList>	  
+    </action>
+    <action>
+      <name>SetWeather</name>
+	  <argumentList>
+		<argument>
+          <name>xSet</name>
+          <direction>in</direction>
+          <relatedStateVariable>weatherItem</relatedStateVariable>
+        </argument>
+      </argumentList>	  
+    </action>
+    <action>
+      <name>SetSelected</name>
+	  <argumentList>
+		<argument>
+          <name>xItemId</name>
+          <direction>in</direction>
+          <relatedStateVariable>selectedItem</relatedStateVariable>
+        </argument>
+      </argumentList>	  
+    </action>	
+    <action>
+      <name>SetRefPeriod</name>
+      <argumentList>
+		<argument>
+		  <name>xRefPeriod</name>
+		  <direction>in</direction>
+			  <relatedStateVariable>refreshperiod</relatedStateVariable>
+		</argument>
+      </argumentList>
+    </action>	
+	<action>	
+      <name>GetFeed</name>
+      <argumentList>
+        <argument>
+          <name>xRssUrl</name>
+          <direction>in</direction>
+          <relatedStateVariable>rssURL</relatedStateVariable>
+        </argument>
+		<argument>
+          <name>xUserName</name>
+          <direction>in</direction>
+          <relatedStateVariable>userName</relatedStateVariable>
+        </argument>
+		<argument>
+          <name>xPassword</name>
+          <direction>in</direction>
+          <relatedStateVariable>Password</relatedStateVariable>
+        </argument>
+		<argument>
+          <name>yTitle</name>
+          <direction>out</direction>
+          <relatedStateVariable>rssTitle</relatedStateVariable>
+        </argument>		
+		<argument>
+          <name>yDescription</name>
+          <direction>out</direction>
+          <relatedStateVariable>rssDescription</relatedStateVariable>
+        </argument>
+		<argument>
+          <name>yContent</name>
+          <direction>out</direction>
+          <relatedStateVariable>rssContent</relatedStateVariable>
+        </argument>	
+		<argument>
+          <name>yLink</name>
+          <direction>out</direction>
+          <relatedStateVariable>rssLink</relatedStateVariable>
+        </argument>	
+      </argumentList>
+    </action>
+  </actionList>
+</scpd>
