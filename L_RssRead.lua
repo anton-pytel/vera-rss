@@ -92,11 +92,6 @@ function findChild(parentDevice, label)
 end
 
 
-
-
--- load required modules
-http = require("socket.http")
-
 -- string operations
 function ltrim(s)
   return (s:gsub("^%s*", ""))
@@ -390,7 +385,7 @@ function sendRequest(xUrl, xUser, xPass, xy_user_params, xSelected)
 		end
 	end
 	dump(xmlTree)
-
+    collectgarbage("collect")
 	return yTitle, yDescr, yContent, yLink, yCount, xy_user_params
 end
 
